@@ -2,6 +2,7 @@ from slankpy.Objects import KinematicObject
 from slankpy.Input import KeyboardInput
 
 import pygame
+import random
 
 
 class Player(KinematicObject.KinematicObject):
@@ -53,6 +54,6 @@ class Player(KinematicObject.KinematicObject):
 
     def check_collision(self, *layers:pygame.sprite.Group) -> None:
         
-        hits = self.collision.get_all_collisions(*layers)
-        if hits:
-            self.rect.x = hits.sprites()[0]
+        for layer in layers:
+            if pygame.sprite.spritecollide(self, layer, False):
+                print(f"{random.random()}")

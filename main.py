@@ -5,6 +5,7 @@ import Player
 
 
 screen = Screen.Screen(800, 800)
+screen.set_fill_color((100, 150, 100))
 screen.set_caption("No Country for Old Men - English Project")
 screen.add_layer("tiles")
 screen.add_layer("players")
@@ -16,7 +17,7 @@ camera = Camera.Camera(player)
 camera.set_zoom(2)
 
 
-map_data = MapLoader.load_map("assets/untitled.tmj")
+map_data = MapLoader.load_map("assets/map.tmj")
 map = MapLoader.map_to_group(map_data, "assets/tileset.png", "tiles", 5, 5)
 screen.layers["tiles"].add(map)
 
