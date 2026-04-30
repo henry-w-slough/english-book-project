@@ -49,3 +49,10 @@ class Player(KinematicObject.KinematicObject):
             self.animation_frame = 0
 
         self.set_sprite(f"walk_{self.direction}", self.animation_frame)
+
+
+    def check_collision(self, *layers:pygame.sprite.Group) -> None:
+        
+        hits = self.collision.get_all_collisions(*layers)
+        if hits:
+            self.rect.x = hits.sprites()[0]
