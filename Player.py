@@ -55,5 +55,10 @@ class Player(KinematicObject.KinematicObject):
     def check_collision(self, *layers:pygame.sprite.Group) -> None:
         
         for layer in layers:
-            if pygame.sprite.spritecollide(self, layer, False):
-                print(f"{random.random()}")
+            
+            hits = pygame.sprite.spritecollide(self, layer, False)
+            
+            if not hits:
+                continue
+
+            

@@ -13,7 +13,7 @@ screen.set_fill_color((125, 104, 18))
 
 
 player = Player.Player(40, 40, screen.layers["players"])
-player.set_position(400, 400)
+player.set_position(500, 500)
 camera = Camera.Camera(player)
 camera.set_zoom(2)
 
