@@ -2,13 +2,14 @@ from slankpy.Screen import Screen
 from slankpy.Camera import Camera
 from slankpy.Map import MapLoader
 import Player
+import Npc
 
 
 screen = Screen.Screen(800, 800)
-screen.set_fill_color((100, 150, 100))
-screen.set_caption("No Country for Old Men - English Project")
 screen.add_layer("tiles")
+screen.add_layer("npcs")
 screen.add_layer("players")
+screen.set_fill_color((125, 104, 18))
 
 
 player = Player.Player(40, 40, screen.layers["players"])
@@ -18,8 +19,20 @@ camera.set_zoom(2)
 
 
 map_data = MapLoader.load_map("assets/map.tmj")
-map = MapLoader.map_to_group(map_data, "assets/tileset.png", "tiles", 5, 5)
-screen.layers["tiles"].add(map)
+trim = MapLoader.map_to_group(map_data, "assets/tileset.png", "tiles", 5, 5, ["Floors", "Walls", "Path"])
+floor = MapLoader.map_to_group(map_data, "assets/tileset.png", "tiles", 5, 5, ["Trim", "Walls", "Path"])
+walls = MapLoader.map_to_group(map_data, "assets/tileset.png", "tiles", 5, 5, ["Floors", "Trim", "Path"])
+path = MapLoader.map_to_group(map_data, "assets/tileset.png", "tiles", 5, 5, ["Floors", "Trim", "Walls"])
+
+screen.layers["tiles"].add(path)
+screen.layers["tiles"].add(walls)
+screen.layers["tiles"].add(floor)
+screen.layers["tiles"].add(trim)
+
+
+attendee = Npc.Npc(40, 40, screen.layers["npcs"])
+attendee.sprite.add_sprites("assets/npc/idle.png", "idle", 4, 1)
+attendee.set_position(400, 400)
 
 
 running = True
