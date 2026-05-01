@@ -56,9 +56,11 @@ class Player(KinematicObject.KinematicObject):
         
         for layer in layers:
             
-            hits = pygame.sprite.spritecollide(self, layer, False)
-            
+            hits = self.collision.check_mask(layer)
+
             if not hits:
                 continue
+
+            self.collision.resolve_mask(layer)
 
             

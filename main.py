@@ -6,7 +6,8 @@ import Npc
 
 
 screen = Screen.Screen(800, 800)
-screen.add_layer("tiles")
+screen.add_layer("passable")
+screen.add_layer("collides")
 screen.add_layer("npcs")
 screen.add_layer("players")
 screen.set_fill_color((125, 104, 18))
@@ -24,11 +25,10 @@ floor = MapLoader.map_to_group(map_data, "assets/tileset.png", "tiles", 5, 5, ["
 walls = MapLoader.map_to_group(map_data, "assets/tileset.png", "tiles", 5, 5, ["Floors", "Trim", "Path"])
 path = MapLoader.map_to_group(map_data, "assets/tileset.png", "tiles", 5, 5, ["Floors", "Trim", "Walls"])
 
-screen.layers["tiles"].add(path)
-screen.layers["tiles"].add(walls)
-screen.layers["tiles"].add(floor)
-screen.layers["tiles"].add(trim)
-
+screen.layers["passable"].add(path)
+screen.layers["collides"].add(walls)
+screen.layers["passable"].add(floor)
+screen.layers["collides"].add(trim)
 
 attendee = Npc.Npc(40, 40, screen.layers["npcs"])
 attendee.sprite.add_sprites("assets/npc/idle.png", "idle", 4, 1)
@@ -45,7 +45,7 @@ while running:
         running = False
 
 
-    player.check_collision(screen.layers["tiles"])
+    player.check_collision(screen.layers["collides"])
 
 
     camera.apply_offset(*screen.layers.values())
