@@ -6,7 +6,7 @@ import random
 
 
 class Player(KinematicObject.KinematicObject):
-    def __init__(self, width: int, height: int, *groups:pygame.sprite.Group) -> None:
+    def __init__(self, width: int, height: int, collides:pygame.sprite.Group, *groups:pygame.sprite.Group) -> None:
         super().__init__(width, height, *groups)
 
         self.speed = 3
@@ -23,12 +23,20 @@ class Player(KinematicObject.KinematicObject):
         self.animation_frame = 0
         self.animation_delay = 0
 
+        self.collide_layers = collides
+
     def update(self) -> None:
         
         move_x = KeyboardInput.get_input_vector(pygame.K_a, pygame.K_d)
         move_y = KeyboardInput.get_input_vector(pygame.K_w, pygame.K_s)
 
-        self.add_position(move_x*self.speed, move_y*self.speed)
+        # Then move
+        self.add_position(move_x*self.speed, 0)
+        self.collision.resolve_mask(self.collide_layers)
+
+        self.add_position(0, move_y*self.speed)
+        self.collision.resolve_mask(self.collide_layers)
+        
 
         if move_x > 0:
             self.direction = "right" 
@@ -51,16 +59,6 @@ class Player(KinematicObject.KinematicObject):
 
         self.set_sprite(f"walk_{self.direction}", self.animation_frame)
 
-
-    def check_collision(self, *layers:pygame.sprite.Group) -> None:
         
-        for layer in layers:
-            
-            hits = self.collision.check_mask(layer)
-
-            if not hits:
-                continue
-
-            self.collision.resolve_mask(layer)
 
             
