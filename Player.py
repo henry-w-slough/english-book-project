@@ -32,10 +32,10 @@ class Player(KinematicObject.KinematicObject):
 
         # Then move
         self.add_position(move_x*self.speed, 0)
-        self.collision.resolve_mask(self.collide_layers)
+        self.collision.resolve_rect(self.collide_layers)
 
         self.add_position(0, move_y*self.speed)
-        self.collision.resolve_mask(self.collide_layers)
+        self.collision.resolve_rect(self.collide_layers)
         
 
         if move_x > 0:
@@ -54,8 +54,6 @@ class Player(KinematicObject.KinematicObject):
                 self.animation_delay = 0
             if self.animation_frame >= 4:
                 self.animation_frame = 0
-        else:
-            self.animation_frame = 0
 
         self.set_sprite(f"walk_{self.direction}", self.animation_frame)
 

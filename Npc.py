@@ -11,6 +11,8 @@ class Npc(KinematicObject.KinematicObject):
         self.animation_delay = 0
         self.animation_frame = 0
 
+        self.active = False
+
         self.animation_state = "idle"
 
         self.dialogue = {
@@ -20,8 +22,6 @@ class Npc(KinematicObject.KinematicObject):
             3: "This is text 4",
             4: "This is text 5",
         }
-
-        self.is_active = False
     
     def update(self) -> None:
 
@@ -32,11 +32,10 @@ class Npc(KinematicObject.KinematicObject):
         if self.animation_frame >= 4:
             self.animation_frame = 0
 
-        self.set_sprite(self.animation_state, self.animation_frame)
-        
         if MouseInput.is_mouse_over_object(self):
             self.animation_state = "hovered"
-            if MouseInput.is_mouse_clicked(0):
-                self.is_active = True
         else:
             self.animation_state = "idle"
+
+        self.set_sprite(self.animation_state, self.animation_frame)
+    
