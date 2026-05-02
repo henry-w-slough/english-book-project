@@ -55,12 +55,10 @@ while running:
 
 
     mouse_input = pygame.mouse.get_pressed()
+
     if attendee.is_active:
-        if dialogue_event == 0:
-            continue
-    else:
-        player.speed = 3
-        text_box.set_background_color((0, 0, 0, 255))
+        if dialogue_event != 0:
+            
 
     previous_input = mouse_input
 
